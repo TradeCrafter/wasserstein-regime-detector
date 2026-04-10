@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/tradecraft-logo.jpg" width="100" height="250">
+<img src="https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/tradecraft-logo.jpg" width="200" height="500">
 # Tradecraft Analytics
 
 > Professional-grade crypto trading dashboard powered by the Bybit API.
