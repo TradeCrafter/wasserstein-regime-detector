@@ -11,7 +11,7 @@ O módulo de detecção de regimes é o componente mais sofisticado tecnicamente
 
 ### Como funciona
 
-**Calibração offline** (roda semanalmente via Supabase pg_cron):
+**Calibração offline** 
 
 1. Busca 1000 candles de 1 hora na Bybit para cada par rastreado
 2. Calcula log-retornos: $r_i = \log(S_{i+1}) - \log(S_i)$
@@ -19,7 +19,7 @@ O módulo de detecção de regimes é o componente mais sofisticado tecnicamente
 4. Roda WK-means em $(\mathcal{P}_p(\mathbb{R}), W_p)$ com baricentros de Wasserstein como centroides de cluster (Proposição 2.6)
 5. Persiste os centroides bull e bear na tabela `regime_centroids`
 
-**Classificação em tempo real** (roda no browser, < 1ms por candle):
+**Classificação em tempo real** 
 
 Dados os centroides $\bar{\mu}^{\text{bull}}, \bar{\mu}^{\text{bear}}$ e a janela de retornos atual $w \in \mathbb{R}^{h_1}$:
 
@@ -33,9 +33,7 @@ A estatística de Kolmogorov-Smirnov carece de sensibilidade para diferenças di
 
 Em dados do SPY (2005–2020), o algoritmo WK-means identificou corretamente a Crise Financeira Global, o crash do COVID, a crise da dívida da Eurozona (2010), o downgrade do S&P (2011) e o crash da bolsa chinesa (2015) — eventos que o MK-means baseado em momentos não detectou.
 
-### Ferramenta desktop standalone
-
-Uma aplicação desktop Python autossuficiente está disponível para análise offline: [`wasserstein_regime.py`](tools/wasserstein_regime.py)
+### Como usar
 
 ```bash
 pip install matplotlib numpy requests
@@ -43,84 +41,6 @@ python wasserstein_regime.py
 ```
 
 Renderiza 7 gráficos: trajetória de preço com coloração por regime, distância W₁ ao longo do tempo, distribuição de retornos vs centroides, convergência do WK-means, QQ-plot, histograma de proporção de regimes e volatilidade anualizada por regime.
-
----
-
-## Começando
-
-### Pré-requisitos
-
-- Node.js 18+
-- Um projeto Supabase
-- Conta Bybit (chave de API somente leitura, opcional — endpoints públicos são usados por padrão)
-
-### Desenvolvimento local
-
-```bash
-git clone https://github.com/tradecraft-labs/tradecraft-analytics
-cd tradecraft-analytics
-npm install
-```
-
-Criar `.env.local`:
-
-```
-VITE_SUPABASE_URL=https://seu-projeto.supabase.co
-VITE_SUPABASE_ANON_KEY=sua-anon-key
-```
-
-```bash
-npm run dev
-```
-
-### Setup do Supabase
-
-Rodar as migrations em ordem:
-
-```bash
-supabase link --project-ref seu-project-ref
-supabase db push
-```
-
-Deploy da Edge Function de calibração de regimes:
-
-```bash
-supabase functions deploy calibrate-regimes --no-verify-jwt
-```
-
-Disparar a calibração inicial:
-
-```bash
-curl -X POST https://seu-projeto.supabase.co/functions/v1/calibrate-regimes \
-  -H "Authorization: Bearer SUA_SERVICE_ROLE_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{}'
-```
-
----
-
-## Schema do Banco
-
-```sql
--- Gestão de usuários
-users (id, email, status, created_at)
-
--- Watchlists por usuário
-watchlists (id, user_id, coin_id, created_at)
-
--- Alertas de preço
-price_alerts (id, user_id, coin_id, target_price, direction, triggered, created_at)
-
--- Centroides de regime Wasserstein (atualizado semanalmente)
-regime_centroids (symbol, bull_centroid float8[], bear_centroid float8[],
-                  bull_vol, bear_vol, h1, calibrated_at)
-
--- Cache de respostas de API
-api_cache (key, data, expires_at)
-
--- Dados de sentimento
-sentiment_data (coin_id, score, source, created_at)
-```
 
 ---
 
