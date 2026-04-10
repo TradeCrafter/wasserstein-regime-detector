@@ -3,9 +3,8 @@
 # Tradecraft Analytics
 
 
-```
 <img src="https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/screen.png">
----
+
 
 ## Wasserstein Regime Detector
 
