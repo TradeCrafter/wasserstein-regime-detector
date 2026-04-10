@@ -1,54 +1,55 @@
 <img src="https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/tradecraft-logo.jpg" width="200" height="500">
+
 # Tradecraft Analytics
 
-> Professional-grade crypto trading dashboard powered by the Bybit API.
+> Dashboard profissional de análise de crypto powered by Bybit API.
 
-Tradecraft Analytics is a full-stack SaaS platform built for perpetual futures traders. It combines real-time market data with quantitative research-grade analysis — from order book depth heatmaps to distributional regime detection based on peer-reviewed financial mathematics.
+Tradecraft Analytics é uma plataforma SaaS full-stack construída para traders de futuros perpétuos. Combina dados de mercado em tempo real com análise de nível acadêmico — desde heatmaps de profundidade de order book até detecção de regimes baseada em matemática financeira publicada em periódicos revisados por pares.
 
 ---
 
-## Features
+## Funcionalidades
 
-### Market Intelligence
-- **Candlestick charts** with RSI, MACD, Bollinger Bands and EMA overlays, multiple timeframes
-- **Order Book Heatmap** — live depth visualization with Web Worker rendering and zero-copy Transferable buffers for smooth performance
-- **Volume Profile** and MACD histogram panels
-- **Trading Signals Panel** — composite score across technical, derivatives and real-time orderbook signals with entry/stop/target levels
+### Inteligência de Mercado
+- **Gráficos de candlestick** com RSI, MACD, Bollinger Bands e EMAs, múltiplos timeframes
+- **Heatmap de Order Book** — visualização de profundidade ao vivo com rendering em Web Worker e buffers Transferable de zero-cópia para performance suave
+- **Volume Profile** e painel de histograma MACD
+- **Painel de Sinais** — score composto sobre indicadores técnicos, derivativos e order book em tempo real, com níveis de entrada, stop e alvo
 
-### Quantitative Models
-- **Wasserstein Regime Detector** — unsupervised market regime classification using the 1-Wasserstein distance between empirical return distributions, based on [Horvath, Issa & Muguruza (2021)](https://ssrn.com/abstract=3947905). Detects bull/bear regimes without parametric assumptions on the return distribution
-- **Hidden Markov Model (HMM) Regime Panel** — latent state sequence estimation with Gaussian emission probabilities
-- **Kalman Filter Panel** — signal extraction and trend estimation with econophysics-derived signals
-- **Fractal Regime Detector** — MFDFA-based multifractal analysis for volatility clustering detection
-- **Econophysics Panel** — VPIN (Volume-synchronized Probability of Informed Trading), OFI (Order Flow Imbalance), Local Volatility surface, Depth Correlation
+### Modelos Quantitativos
+- **Wasserstein Regime Detector** — classificação não-supervisionada de regimes de mercado usando a distância 1-Wasserstein entre distribuições empíricas de log-retornos, baseado em [Horvath, Issa & Muguruza (2021)](https://ssrn.com/abstract=3947905). Detecta regimes bull/bear sem premissas paramétricas sobre a distribuição dos retornos
+- **Painel HMM (Hidden Markov Model)** — estimação de sequência de estados latentes com probabilidades de emissão gaussianas
+- **Painel Kalman Filter** — extração de sinal e estimação de tendência com sinais derivados de econofísica
+- **Fractal Regime Detector** — análise multifractal baseada em MFDFA para detecção de clustering de volatilidade
+- **Painel de Econofísica** — VPIN (Volume-synchronized Probability of Informed Trading), OFI (Order Flow Imbalance), Superfície de Volatilidade Local, Correlação de Profundidade
 
-### Derivatives & Forecasting
-- **Options Panel** — open interest, put/call ratio and market bias for BTC and ETH (Bybit options)
-- **Forecast Panel** — ARIMA-GARCH volatility forecasting with confidence bands
-- **Chart Patterns Panel** — automated pattern recognition tied to regime state
+### Derivativos & Previsão
+- **Painel de Opções** — open interest, put/call ratio e viés de mercado para BTC e ETH (opções Bybit)
+- **Painel de Forecast** — previsão de volatilidade ARIMA-GARCH com bandas de confiança
+- **Painel de Padrões Gráficos** — reconhecimento automático de padrões vinculado ao estado de regime
 
-### Platform
-- **Paper Trading** — full simulated trading environment with position tracking and P&L, no real capital required
-- **Price Alerts** — user-configurable alerts stored in Supabase with real-time evaluation
-- **Admin Panel** — user approval workflow, MRR tracking, user management
-- **Crypto payments** — ETH/BSC/Arbitrum payment detection via on-chain RPC calls
+### Plataforma
+- **Paper Trading** — ambiente completo de trading simulado com rastreamento de posições e P&L, sem capital real
+- **Alertas de Preço** — alertas configuráveis pelo usuário armazenados no Supabase com avaliação em tempo real
+- **Painel Admin** — fluxo de aprovação de usuários, rastreamento de MRR, gestão de usuários
+- **Pagamentos em crypto** — detecção de pagamentos ETH/BSC/Arbitrum via chamadas RPC on-chain
 
 ---
 
 ## Stack
 
-| Layer | Technology |
+| Camada | Tecnologia |
 |---|---|
 | Frontend | React 18 + Vite + Tailwind CSS |
-| Charts | Lightweight Charts, Chart.js, D3.js, custom SVG |
-| Auth & DB | Supabase (PostgreSQL + Row Level Security) |
-| Hosting | Vercel |
-| Market Data | Bybit V5 API (REST + WebSocket) |
-| Scheduling | Supabase pg_cron + Edge Functions (Deno) |
+| Gráficos | Lightweight Charts, Chart.js, D3.js, SVG customizado |
+| Auth & Banco | Supabase (PostgreSQL + Row Level Security) |
+| Hospedagem | Vercel |
+| Dados de Mercado | Bybit V5 API (REST + WebSocket) |
+| Agendamento | Supabase pg_cron + Edge Functions (Deno) |
 
 ---
 
-## Architecture
+## Arquitetura
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -58,15 +59,15 @@ Tradecraft Analytics is a full-stack SaaS platform built for perpetual futures t
            │
            ▼
 ┌─────────────────────────────────────────────────────────┐
-│                React Frontend (Vercel)                  │
+│               Frontend React (Vercel)                   │
 │                                                         │
 │  useMarketData   useTechnicalIndicators   useOptions    │
-│  useMarketRegime useEconophysics          useForeccast   │
+│  useMarketRegime useEconophysics          useForecast    │
 │  useWassersteinRegime  useTradingSignals               │
 │                                                         │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐  │
-│  │Heatmap   │ │Regime    │ │Kalman    │ │Signals   │  │
-│  │(Worker)  │ │Detector  │ │Filter    │ │Panel     │  │
+│  │Heatmap   │ │Regime    │ │Kalman    │ │Sinais    │  │
+│  │(Worker)  │ │Detector  │ │Filter    │ │Trading   │  │
 │  └──────────┘ └──────────┘ └──────────┘ └──────────┘  │
 └──────────┬──────────────────────────────────────────────┘
            │
@@ -78,64 +79,62 @@ Tradecraft Analytics is a full-stack SaaS platform built for perpetual futures t
 │  api_cache · sentiment_data                             │
 │                                                         │
 │  Edge Functions:  calibrate-regimes (WK-means)         │
-│  pg_cron:         weekly recalibration (Mon 03:00 UTC) │
+│  pg_cron:         recalibração semanal (seg 03:00 UTC) │
 └─────────────────────────────────────────────────────────┘
 ```
-
----
-
 <img src="https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/screen.png">
+---
 
 ## Wasserstein Regime Detector
 
-The regime detection module is the most technically sophisticated component of the platform. It implements the **WK-means algorithm** from Horvath, Issa & Muguruza (2021), which frames market regime clustering as a problem on the space of probability measures with finite *p*-th moment, using the *p*-Wasserstein distance as the metric.
+O módulo de detecção de regimes é o componente mais sofisticado tecnicamente da plataforma. Implementa o **algoritmo WK-means** de Horvath, Issa & Muguruza (2021), que enquadra o problema de clustering de regimes de mercado como um problema no espaço de medidas de probabilidade com momento *p* finito, usando a distância *p*-Wasserstein como métrica.
 
-### How it works
+### Como funciona
 
-**Offline calibration** (runs weekly via Supabase pg_cron):
+**Calibração offline** (roda semanalmente via Supabase pg_cron):
 
-1. Fetch 1000 hourly candles from Bybit for each tracked symbol
-2. Compute log-returns: $r_i = \log(S_{i+1}) - \log(S_i)$
-3. Apply a sliding window lift with parameters $(h_1, h_2)$ to generate a family of empirical distributions $\mathcal{K} = \{\mu_1, \ldots, \mu_M\}$
-4. Run WK-means on $(\mathcal{P}_p(\mathbb{R}), W_p)$ with Wasserstein barycenters as cluster centroids (Proposition 2.6)
-5. Persist the bull and bear centroids to `regime_centroids` table
+1. Busca 1000 candles de 1 hora na Bybit para cada par rastreado
+2. Calcula log-retornos: $r_i = \log(S_{i+1}) - \log(S_i)$
+3. Aplica um lifting de janela deslizante com parâmetros $(h_1, h_2)$ para gerar uma família de distribuições empíricas $\mathcal{K} = \{\mu_1, \ldots, \mu_M\}$
+4. Roda WK-means em $(\mathcal{P}_p(\mathbb{R}), W_p)$ com baricentros de Wasserstein como centroides de cluster (Proposição 2.6)
+5. Persiste os centroides bull e bear na tabela `regime_centroids`
 
-**Real-time classification** (runs in the browser, < 1ms per candle):
+**Classificação em tempo real** (roda no browser, < 1ms por candle):
 
-Given centroids $\bar{\mu}^{\text{bull}}, \bar{\mu}^{\text{bear}}$ and the current return window $w \in \mathbb{R}^{h_1}$:
+Dados os centroides $\bar{\mu}^{\text{bull}}, \bar{\mu}^{\text{bear}}$ e a janela de retornos atual $w \in \mathbb{R}^{h_1}$:
 
 $$W_1(\mu, \nu) = \frac{1}{N} \sum_{i=1}^{N} |\alpha_i - \beta_i|$$
 
-where $\alpha_i, \beta_i$ are the sorted order statistics. Regime is assigned to $\arg\min_{c} \, W_1(w, c)$.
+onde $\alpha_i, \beta_i$ são as estatísticas de ordem ordenadas. O regime é atribuído a $\arg\min_{c} \, W_1(w, c)$.
 
-### Why Wasserstein over moments?
+### Por que Wasserstein e não momentos?
 
-The Kolmogorov-Smirnov statistic lacks sensitivity for distributional differences in the tails. The KL-divergence requires density estimation and has no natural barycenter. The Wasserstein distance metrizes weak convergence and admits the Wasserstein barycenter as a tractable aggregator — making it the natural choice for clustering empirical distributions on the real line.
+A estatística de Kolmogorov-Smirnov carece de sensibilidade para diferenças distribucionais nas caudas. A divergência KL exige estimação de densidade e não tem baricentro natural tratável. A distância de Wasserstein metriza convergência fraca e admite o baricentro de Wasserstein como agregador computacionalmente tratável — tornando-a a escolha natural para clustering de distribuições empíricas na reta real.
 
-On SPY data (2005–2020), the WK-means algorithm correctly identified the Global Financial Crisis, COVID crash, the Eurozone debt crisis (2010), S&P downgrade (2011) and the Chinese market crash (2015) — events that the moment-based MK-means missed entirely.
+Em dados do SPY (2005–2020), o algoritmo WK-means identificou corretamente a Crise Financeira Global, o crash do COVID, a crise da dívida da Eurozona (2010), o downgrade do S&P (2011) e o crash da bolsa chinesa (2015) — eventos que o MK-means baseado em momentos não detectou.
 
-### Standalone desktop tool
+### Ferramenta desktop standalone
 
-A self-contained Python desktop application is available for offline analysis: [`wasserstein_regime.py`](tools/wasserstein_regime.py)
+Uma aplicação desktop Python autossuficiente está disponível para análise offline: [`wasserstein_regime.py`](tools/wasserstein_regime.py)
 
 ```bash
 pip install matplotlib numpy requests
 python wasserstein_regime.py
 ```
 
-Renders 7 charts: price path with regime coloring, W₁ distance over time, return distribution vs centroids, WK-means convergence, QQ-plot, regime proportion histogram, and annualized volatility by regime.
+Renderiza 7 gráficos: trajetória de preço com coloração por regime, distância W₁ ao longo do tempo, distribuição de retornos vs centroides, convergência do WK-means, QQ-plot, histograma de proporção de regimes e volatilidade anualizada por regime.
 
 ---
 
-## Getting Started
+## Começando
 
-### Prerequisites
+### Pré-requisitos
 
 - Node.js 18+
-- A Supabase project
-- A Bybit account (read-only API key, optional — public endpoints are used by default)
+- Um projeto Supabase
+- Conta Bybit (chave de API somente leitura, opcional — endpoints públicos são usados por padrão)
 
-### Local development
+### Desenvolvimento local
 
 ```bash
 git clone https://github.com/tradecraft-labs/tradecraft-analytics
@@ -143,82 +142,82 @@ cd tradecraft-analytics
 npm install
 ```
 
-Create `.env.local`:
+Criar `.env.local`:
 
 ```
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
+VITE_SUPABASE_URL=https://seu-projeto.supabase.co
+VITE_SUPABASE_ANON_KEY=sua-anon-key
 ```
 
 ```bash
 npm run dev
 ```
 
-### Supabase setup
+### Setup do Supabase
 
-Run the migrations in order:
+Rodar as migrations em ordem:
 
 ```bash
-supabase link --project-ref your-project-ref
+supabase link --project-ref seu-project-ref
 supabase db push
 ```
 
-Deploy the regime calibration Edge Function:
+Deploy da Edge Function de calibração de regimes:
 
 ```bash
 supabase functions deploy calibrate-regimes --no-verify-jwt
 ```
 
-Trigger the initial calibration:
+Disparar a calibração inicial:
 
 ```bash
-curl -X POST https://your-project.supabase.co/functions/v1/calibrate-regimes \
-  -H "Authorization: Bearer YOUR_SERVICE_ROLE_KEY" \
+curl -X POST https://seu-projeto.supabase.co/functions/v1/calibrate-regimes \
+  -H "Authorization: Bearer SUA_SERVICE_ROLE_KEY" \
   -H "Content-Type: application/json" \
   -d '{}'
 ```
 
 ---
 
-## Database Schema
+## Schema do Banco
 
 ```sql
--- User management
+-- Gestão de usuários
 users (id, email, status, created_at)
 
--- Watchlists per user
+-- Watchlists por usuário
 watchlists (id, user_id, coin_id, created_at)
 
--- Price alerts
+-- Alertas de preço
 price_alerts (id, user_id, coin_id, target_price, direction, triggered, created_at)
 
--- Wasserstein regime centroids (updated weekly)
+-- Centroides de regime Wasserstein (atualizado semanalmente)
 regime_centroids (symbol, bull_centroid float8[], bear_centroid float8[],
                   bull_vol, bear_vol, h1, calibrated_at)
 
--- API response cache
+-- Cache de respostas de API
 api_cache (key, data, expires_at)
 
--- Sentiment data
+-- Dados de sentimento
 sentiment_data (coin_id, score, source, created_at)
 ```
 
 ---
 
-## Research References
+## Referências Acadêmicas
 
-The quantitative models in Tradecraft Analytics are grounded in academic literature:
+Os modelos quantitativos do Tradecraft Analytics são fundamentados em literatura acadêmica:
 
-| Model | Paper |
+| Modelo | Paper |
 |---|---|
 | Wasserstein Regime Detector | Horvath, B., Issa, Z., & Muguruza, A. (2021). *Clustering Market Regimes Using the Wasserstein Distance.* SSRN 3947905 |
-| Bar Portion Signal (PMM bot) | Stoikov, S. (2024). *The bar portion signal.* |
+| Sinal Bar Portion (bot PMM) | Stoikov, S. (2024). *The bar portion signal.* |
 | VPIN | Easley, D., López de Prado, M. & O'Hara, M. (2012). *Flow toxicity and liquidity in a high-frequency world.* Review of Financial Studies |
 | Kalman Filter | Harvey, A. C. (1990). *Forecasting, Structural Time Series Models and the Kalman Filter.* Cambridge University Press |
 | HMM Regime Switching | Hamilton, J. D. (1989). *A new approach to the economic analysis of nonstationary time series and the business cycle.* Econometrica |
 
 ---
 
-## License
+## Licença
 
-Proprietary. All rights reserved. Tradecraft Labs.
+Proprietário. Todos os direitos reservados. Tradecraft Labs.
