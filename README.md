@@ -1,3 +1,4 @@
+https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/tradecraft-logo.jpg
 # Tradecraft Analytics
 
 > Professional-grade crypto trading dashboard powered by the Bybit API.
@@ -82,6 +83,8 @@ Tradecraft Analytics is a full-stack SaaS platform built for perpetual futures t
 ```
 
 ---
+
+https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/screen.png
 
 ## Wasserstein Regime Detector
 
