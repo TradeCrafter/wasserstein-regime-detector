@@ -3,12 +3,11 @@
 # Tradecraft Analytics
 
 
-<img src="https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/screen.png">
-
-
 ## Wasserstein Regime Detector
 
 O módulo de detecção de regimes é o componente mais sofisticado tecnicamente da plataforma. Implementa o **algoritmo WK-means** de Horvath, Issa & Muguruza (2021), que enquadra o problema de clustering de regimes de mercado como um problema no espaço de medidas de probabilidade com momento *p* finito, usando a distância *p*-Wasserstein como métrica.
+
+<img src="https://raw.githubusercontent.com/TradeCrafter/wasserstein-regime-detector/main/screen.png">
 
 ### Como funciona
 
