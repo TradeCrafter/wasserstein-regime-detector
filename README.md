@@ -131,13 +131,9 @@ Os modelos quantitativos do Tradecraft Analytics são fundamentados em literatur
 | Modelo | Paper |
 |---|---|
 | Wasserstein Regime Detector | Horvath, B., Issa, Z., & Muguruza, A. (2021). *Clustering Market Regimes Using the Wasserstein Distance.* SSRN 3947905 |
-| Sinal Bar Portion (bot PMM) | Stoikov, S. (2024). *The bar portion signal.* |
-| VPIN | Easley, D., López de Prado, M. & O'Hara, M. (2012). *Flow toxicity and liquidity in a high-frequency world.* Review of Financial Studies |
-| Kalman Filter | Harvey, A. C. (1990). *Forecasting, Structural Time Series Models and the Kalman Filter.* Cambridge University Press |
-| HMM Regime Switching | Hamilton, J. D. (1989). *A new approach to the economic analysis of nonstationary time series and the business cycle.* Econometrica |
+
 
 ---
 
 ## Licença
-
-Proprietário. Todos os direitos reservados. Tradecraft Labs.
+GNU - GPL. Tradecraft Labs.
